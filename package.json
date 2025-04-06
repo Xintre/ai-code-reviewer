@@ -1,0 +1,28 @@
+{
+	"name": "@xintre/code-reviewer-monorepo",
+	"scripts": {
+		"dev:backend": "yarn workspace @xintre/backend dev",
+		"dev:frontend": "yarn workspace @xintre/frontend dev",
+		"build": "yarn workspaces foreach -Ap run build"
+	},
+	"dependencies": {
+		"dotenv": "^16.4.7",
+		"lodash": "^4.17.21"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.17.16",
+		"@types/node": "^22.14.0",
+		"tsx": "^4.19.3",
+		"typescript": "^5.8.3"
+	},
+	"packageManager": "yarn@4.4.1",
+	"engines": {
+		"node": ">=22.0.0"
+	},
+	"private": true,
+	"workspaces": [
+		"frontend",
+		"backend",
+		"shared"
+	]
+}
