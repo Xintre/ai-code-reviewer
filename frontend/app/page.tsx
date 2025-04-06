@@ -1,14 +1,23 @@
 'use client';
 
 import {
+	Button,
+	FormControl,
+	Grid,
+	InputLabel,
+	MenuItem,
+	Select,
+	TextField,
+} from '@mui/material';
+import {
 	CreateCodeReviewRequestDTO,
 	CreateCodeReviewResponseDTO,
 } from '@xintre/shared';
 import { FormEvent, useMemo, useState } from 'react';
-import { Grid, TextField } from '@mui/material';
 
 import Editor from '@monaco-editor/react';
 import { FaintDivider } from '@/components/FaintDivider';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import { ResponseBox } from '@/components/ResponseBox';
 import { SubmitButton } from '@/components/SubmitButton';
 import { fetchPOST } from '@/utils/apiClient';
@@ -24,6 +33,7 @@ export default function IDE() {
 	const [code, setCode] = useState<string>('console.log("Hi there 👋")');
 	const [snippetName, setSnippetName] = useState<string>('');
 	const [isCodeValid, setIsCodeValid] = useState<boolean>(true);
+	const [languageChoice, setLanguageChoice] = useState<string>('javascript');
 
 	const { canSubmit, reasonWhyError } = useMemo(() => {
 		if (snippetName.trim().length === 0) {
@@ -87,6 +97,7 @@ export default function IDE() {
 			console.error('Error creating code review', error);
 		},
 	});
+	console.log('language', languageChoice);
 
 	return (
 		<div
@@ -98,7 +109,43 @@ export default function IDE() {
 				height: '100%',
 			}}
 		>
-			<h2 style={{ fontWeight: 'normal' }}>Add your code 🧑‍💻</h2>
+			<Grid
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					width: '100%',
+				}}
+			>
+				<Grid flex={4}>
+					<FormControl>
+						<InputLabel id="language-selector">Language</InputLabel>
+						<Select
+							style={{
+								height: '2.5rem',
+							}}
+							id="languageChoice"
+							value={languageChoice}
+							label="Language"
+							onChange={(event) =>
+								setLanguageChoice(event.target.value)
+							}
+						>
+							<MenuItem value="javascript">javascript</MenuItem>
+							<MenuItem value="typescript">typescript</MenuItem>
+						</Select>
+					</FormControl>
+				</Grid>
+				<Grid flex={4} textAlign={'center'}>
+					<h2 style={{ fontWeight: 'normal' }}>Add your code 🧑‍💻</h2>
+				</Grid>
+				<Grid flex={4} textAlign={'right'}>
+					<Button variant="contained" endIcon={<HistoryEduIcon />}>
+						View your code reviews history{' '}
+					</Button>
+				</Grid>
+			</Grid>
 
 			<FaintDivider orientation="horizontal" />
 
@@ -117,6 +164,7 @@ export default function IDE() {
 					<Editor
 						height="50vh"
 						defaultLanguage="javascript"
+						language={languageChoice}
 						defaultValue='console.log("Hi there 👋")'
 						value={code}
 						theme={isDark}
@@ -131,6 +179,7 @@ export default function IDE() {
 							display: 'flex',
 							flexDirection: 'row',
 							alignItems: 'center',
+							paddingTop: '1em',
 						}}
 						action="#"
 						onSubmit={handleSubmit}
