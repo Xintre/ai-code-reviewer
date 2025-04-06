@@ -1,0 +1,26 @@
+{
+	"name": "@xintre/backend",
+	"packageManager": "yarn@4.4.1",
+	"devDependencies": {
+		"@types/cors": "^2",
+		"@types/express": "^5.0.1",
+		"@types/signale": "^1",
+		"@types/yargs": "^17.0.33",
+		"tsx": "*",
+		"typescript": "*"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^5.1.0",
+		"helmet": "^8.1.0",
+		"lorem-ipsum": "^2.0.8",
+		"openai": "^4.91.1",
+		"signale": "^1.4.0",
+		"yargs": "^17.7.2"
+	},
+	"scripts": {
+		"build": "tsc --build",
+		"start": "node build/main.js",
+		"dev": "tsx watch src/main.ts"
+	}
+}
