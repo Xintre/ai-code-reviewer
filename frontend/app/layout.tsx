@@ -1,10 +1,12 @@
-import { Box, Divider, Stack } from '@mui/material';
-
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import AppThemeProvider from '@/components/providers/AppThemeProvider';
 import { Geist } from 'next/font/google';
 import type { Metadata } from 'next';
+import { Stack } from '@mui/material';
 import { TanstackQueryProvider } from '@/components/providers/TanstackQueryProvider';
+import moment from 'moment';
+
+moment.locale('pl');
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',

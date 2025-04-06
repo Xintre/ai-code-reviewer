@@ -12,12 +12,9 @@ import { FaintDivider } from '@/components/FaintDivider';
 import { ResponseBox } from '@/components/ResponseBox';
 import { SubmitButton } from '@/components/SubmitButton';
 import { fetchPOST } from '@/utils/apiClient';
-import moment from 'moment';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useMutation } from '@tanstack/react-query';
 import { useTheme } from '@mui/material';
-
-moment.locale('pl');
 
 export default function IDE() {
 	const theme = useTheme();
@@ -58,7 +55,8 @@ export default function IDE() {
 		}
 
 		console.log('Sending submission');
-		apiReviewCode(code);
+
+		apiReviewCode({ code, snippetName });
 	};
 
 	const {
@@ -68,13 +66,19 @@ export default function IDE() {
 		data: response,
 		mutate: apiReviewCode,
 	} = useMutation({
-		mutationFn: async (code: string) => {
+		mutationFn: async ({
+			code,
+			snippetName,
+		}: {
+			code: string;
+			snippetName: string;
+		}) => {
 			const response = await fetchPOST<
 				CreateCodeReviewRequestDTO,
 				CreateCodeReviewResponseDTO
 			>({
 				url: '/api/code-review',
-				body: { code },
+				body: { code: code, name: snippetName },
 			});
 
 			return response.data;
