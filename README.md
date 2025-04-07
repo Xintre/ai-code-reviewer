@@ -1,3 +1,5 @@
+![CI](https://github.com/xintre/ai-code-reviewer/actions/workflows/ci.yml/badge.svg)
+
 ### AI code reviewer
 
 ## Introduction
@@ -17,16 +19,16 @@ There are 3 submodules in this monorepository:
 - [Screenshots 📸](#screenshots-)
 - [Code style 🧑‍💻](#code-style-)
 - [Technical details 🛠](#technical-details-)
-    - [Languages \& frameworks](#languages--frameworks)
-    - [Libraries](#libraries)
-        - [Frontend 🌸](#frontend-)
-        - [Backend 💻](#backend-)
-        - [Shared 🌐](#shared-)
+  - [Languages \& frameworks](#languages--frameworks)
+  - [Libraries](#libraries)
+    - [Frontend 🌸](#frontend-)
+    - [Backend 💻](#backend-)
+    - [Shared 🌐](#shared-)
 - [Available scripts 📜](#available-scripts-)
 - [Tooling](#tooling)
 - [Get started 🚀️](#get-started-️)
-    - [Run in **production** mode](#run-in-production-mode)
-    - [Run in **development** mode](#run-in-development-mode)
+  - [Run in **production** mode](#run-in-production-mode)
+  - [Run in **development** mode](#run-in-development-mode)
 
 ## Screenshots 📸
 
