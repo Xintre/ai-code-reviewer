@@ -23,17 +23,23 @@ import { SubmitButton } from '@/components/SubmitButton';
 import { fetchPOST } from '@/utils/apiClient';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useTheme } from '@mui/material';
 
 export default function IDE() {
 	const theme = useTheme();
-	const isDark = theme.palette.mode === 'dark' ? 'vs-dark' : 'light';
+	const { push: routerPush } = useRouter();
 	const isMdOrSmaller = useMediaQuery(theme.breakpoints.down('md'));
 
 	const [code, setCode] = useState<string>('console.log("Hi there 👋")');
 	const [snippetName, setSnippetName] = useState<string>('');
 	const [isCodeValid, setIsCodeValid] = useState<boolean>(true);
 	const [languageChoice, setLanguageChoice] = useState<string>('javascript');
+
+	const editorTheme = useMemo(
+		() => (theme.palette.mode === 'dark' ? 'vs-dark' : 'light'),
+		[theme.palette.mode],
+	);
 
 	const { canSubmit, reasonWhyError } = useMemo(() => {
 		if (snippetName.trim().length === 0) {
@@ -66,7 +72,7 @@ export default function IDE() {
 
 		console.log('Sending submission');
 
-		apiReviewCode({ code, snippetName });
+		apiReviewCode({ code, snippetName, languageChoice });
 	};
 
 	const {
@@ -79,16 +85,22 @@ export default function IDE() {
 		mutationFn: async ({
 			code,
 			snippetName,
+			languageChoice,
 		}: {
 			code: string;
 			snippetName: string;
+			languageChoice: string;
 		}) => {
 			const response = await fetchPOST<
 				CreateCodeReviewRequestDTO,
 				CreateCodeReviewResponseDTO
 			>({
 				url: '/api/code-review',
-				body: { code: code, name: snippetName },
+				body: {
+					code: code,
+					name: snippetName,
+					language: languageChoice,
+				},
 			});
 
 			return response.data;
@@ -97,7 +109,6 @@ export default function IDE() {
 			console.error('Error creating code review', error);
 		},
 	});
-	console.log('language', languageChoice);
 
 	return (
 		<div
@@ -141,8 +152,14 @@ export default function IDE() {
 					<h2 style={{ fontWeight: 'normal' }}>Add your code 🧑‍💻</h2>
 				</Grid>
 				<Grid flex={4} textAlign={'right'}>
-					<Button variant="contained" endIcon={<HistoryEduIcon />}>
-						View your code reviews history{' '}
+					<Button
+						variant="contained"
+						endIcon={<HistoryEduIcon />}
+						onClick={() => {
+							routerPush('/reviews');
+						}}
+					>
+						View your code reviews history
 					</Button>
 				</Grid>
 			</Grid>
@@ -163,11 +180,9 @@ export default function IDE() {
 				>
 					<Editor
 						height="50vh"
-						defaultLanguage="javascript"
 						language={languageChoice}
-						defaultValue='console.log("Hi there 👋")'
 						value={code}
-						theme={isDark}
+						theme={editorTheme}
 						onChange={(value) => setCode(value!)}
 						onValidate={(markers) => {
 							setIsCodeValid(markers.length === 0);
@@ -218,8 +233,8 @@ export default function IDE() {
 						response={
 							isError
 								? `Error: ${error.message}`
-								: response?.review ??
-								  'Ask your AI assistant for a review!'
+								: (response?.review ??
+									'Ask your AI assistant for a review!')
 						}
 					/>
 				</Grid>

@@ -1,17 +1,13 @@
 import { ValidationError, ZodInterfaceLike } from './types';
 
-import { CreateCodeReviewRequestDTO } from '@xintre/shared';
+import { GetCodeReviewListRequestDTO } from '@xintre/shared';
 import { z } from 'zod';
 
 const schema = z
-	.object({
-		code: z.string().nonempty(),
-		name: z.string().nonempty(),
-		language: z.string().nonempty(),
-	} as ZodInterfaceLike<CreateCodeReviewRequestDTO>)
+	.object({} as ZodInterfaceLike<GetCodeReviewListRequestDTO>)
 	.strict();
 
-export class CreateCodeReviewRequestDTOValidator {
+export class GetCodeReviewListRequestDTOValidator {
 	/**
 	 * Validates the
 	 *
@@ -19,7 +15,7 @@ export class CreateCodeReviewRequestDTOValidator {
 	 * @returns `z.ZodError` if failed, or undefined if validated successfully
 	 */
 	static validate(
-		dto: CreateCodeReviewRequestDTO,
+		dto: GetCodeReviewListRequestDTO,
 	): ValidationError | undefined {
 		const maybeError = schema.safeParse(dto).error;
 

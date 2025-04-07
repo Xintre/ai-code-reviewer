@@ -1,4 +1,5 @@
 import {
+	BaseEntity,
 	Column,
 	CreateDateColumn,
 	Entity,
@@ -6,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class CodeReview {
+export class CodeReview extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number;
 
@@ -19,6 +20,11 @@ export class CodeReview {
 		nullable: false,
 	})
 	code!: string;
+
+	@Column({
+		nullable: false,
+	})
+	language!: string;
 
 	@Column({
 		nullable: false,

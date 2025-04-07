@@ -10,13 +10,15 @@ export type CreateBaseRequestOptions = {
 	url: string;
 };
 
-export type FetchGetOptions = CreateBaseRequestOptions & {};
-
 async function fetchBase<Response>(
 	{ url }: CreateBaseRequestOptions,
-	fetchOptions?: RequestInit
+	fetchOptions?: RequestInit,
 ) {
 	const response = await fetch(makeURL(url), fetchOptions);
+
+	if (response.status >= 400) {
+		throw new Error(response.status.toString());
+	}
 
 	return {
 		statusCode: response.status,
@@ -24,6 +26,8 @@ async function fetchBase<Response>(
 		data: (await response.json()) as Response,
 	};
 }
+
+export type FetchGetOptions = CreateBaseRequestOptions & {};
 
 export async function fetchGET<Response>(requestOptions: FetchGetOptions) {
 	return await fetchBase<Response>(requestOptions);

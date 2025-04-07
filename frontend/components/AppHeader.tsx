@@ -3,7 +3,8 @@
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import { DarkMode, LightMode } from '@mui/icons-material';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+import { BackButton } from './BackButton';
+
 export type AppHeaderProps = {
 	isDark: boolean;
 	toggleDarkMode: () => void;
@@ -18,7 +19,7 @@ export function AppHeader({ isDark, toggleDarkMode }: AppHeaderProps) {
 						justifyContent: 'space-between',
 					}}
 				>
-					<div />
+					<BackButton />
 
 					<Typography variant="h6">
 						Xintre&apos;s AI Code Reviewer

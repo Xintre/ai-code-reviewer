@@ -21,7 +21,7 @@ export const AppThemeProvider = ({ children }: AppThemeProviderProps) => {
 	useLayoutEffect(() => {
 		setIsDark(
 			window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ??
-				false
+				false,
 		);
 	}, []);
 
