@@ -113,6 +113,7 @@ This project uses the following tools:
 - `lefthook` - git hooks
 - `prettier` - code formatting
 - `eslint` - code linting
+- `@commitlint/cli` + `@commitlint/config-conventional` - linting commit messages to comply with conventional commits specification
 
 ## Available scripts 📜
 

@@ -27,6 +27,10 @@ jobs:
             - name: Install yarn dependencies
               run: yarn
 
+            - name: Validate current commit (last commit) with commitlint
+              if: github.event_name == 'push'
+              run: npx commitlint --last --verbose
+
             - name: Check style with prettier
               run: yarn stylecheck
 
