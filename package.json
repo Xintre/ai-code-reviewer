@@ -5,6 +5,8 @@
 		"dev:backend": "yarn workspace @xintre/backend dev",
 		"dev:frontend": "yarn workspace @xintre/frontend dev",
 		"build": "yarn workspaces foreach -Ap run build",
+		"start": "concurrently \"yarn workspace @xintre/frontend start\" \"yarn workspace @xintre/backend start\"",
+		"dev": "concurrently \"yarn workspace @xintre/frontend dev\" \"yarn workspace @xintre/backend dev\"",
 		"stylecheck": "yarn workspaces foreach -Ap run stylecheck",
 		"lint": "yarn workspaces foreach -Ap run lint"
 	},
@@ -13,8 +15,12 @@
 		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
+		"@eslint/eslintrc": "^3",
+		"@eslint/js": "^9.24.0",
 		"@types/lodash": "^4.17.16",
 		"@types/node": "^22.14.0",
+		"concurrently": "^9.1.2",
+		"eslint": "^9.24.0",
 		"lefthook": "^1.11.6",
 		"prettier": "^3.5.3",
 		"typescript": "^5.8.3"
