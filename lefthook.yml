@@ -1,0 +1,14 @@
+pre-push:
+    parallel: true
+    jobs:
+        - name: stylecheck
+          run: yarn stylecheck
+
+        - name: lint
+          run: yarn lint
+
+pre-commit:
+    parallel: true
+    jobs:
+        - run: npx prettier --write {staged_files}
+          glob: '*.{js,ts,jsx,tsx}'
